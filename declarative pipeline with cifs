@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('scm') {
+            steps {
+                git branch: 'main', url: 'https://github.com/shanmukh2039/vicky'
+                echo 'git checkout'
+            }
+        }
+        stage('deploy') {
+            steps {
+                cifsPublisher(publishers: [[configName: '100', transfers: [[cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]])
+            }
+        }
+    }
+}
